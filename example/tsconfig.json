@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-intl-formatter": ["../src/index"],
+      "expo-intl-formatter/*": ["../src/*"]
+    }
+  }
+}
