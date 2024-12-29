@@ -1,37 +1,35 @@
-import { useEvent } from 'expo';
-import ExpoIntlFormatter, { ExpoIntlFormatterView } from 'expo-intl-formatter';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { formatNumber } from "expo-intl-formatter";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
 
 export default function App() {
-  const onChangePayload = useEvent(ExpoIntlFormatter, 'onChange');
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{ExpoIntlFormatter.PI}</Text>
+        <Text style={styles.header}>Format number</Text>
+        <Group name="EN">
+          <Text>{formatNumber(12345, "en")}</Text>
+          <Text>{formatNumber(123456, "en")}</Text>
+          <Text>{formatNumber(1234567, "en")}</Text>
         </Group>
-        <Group name="Functions">
-          <Text>{ExpoIntlFormatter.hello()}</Text>
+        <Group name="FR">
+          <Text>{formatNumber(12345, "fr")}</Text>
+          <Text>{formatNumber(123456, "fr")}</Text>
+          <Text>{formatNumber(1234567, "fr")}</Text>
         </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ExpoIntlFormatter.setValueAsync('Hello from JS!');
-            }}
-          />
+        <Group name="IT">
+          <Text>{formatNumber(12345, "it")}</Text>
+          <Text>{formatNumber(123456, "fr")}</Text>
+          <Text>{formatNumber(1234567, "fr")}</Text>
         </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
+        <Group name="ES">
+          <Text>{formatNumber(12345, "es")}</Text>
+          <Text>{formatNumber(123456, "fr")}</Text>
+          <Text>{formatNumber(1234567, "fr")}</Text>
         </Group>
-        <Group name="Views">
-          <ExpoIntlFormatterView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
+        <Group name="PT">
+          <Text>{formatNumber(12345, "pt")}</Text>
+          <Text>{formatNumber(123456, "fr")}</Text>
+          <Text>{formatNumber(1234567, "fr")}</Text>
         </Group>
       </ScrollView>
     </SafeAreaView>
@@ -58,13 +56,13 @@ const styles = {
   },
   group: {
     margin: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
   },
   container: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: "#eee",
   },
   view: {
     flex: 1,

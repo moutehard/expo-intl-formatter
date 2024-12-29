@@ -1,7 +1,7 @@
 {
   "name": "expo-intl-formatter",
   "version": "0.1.0",
-  "description": "Format strings and numbers based on locale",
+  "description": "A simple wrapper around the Intl API to format dates, numbers and currencies in Expo projects.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {

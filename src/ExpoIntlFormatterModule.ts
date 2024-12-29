@@ -1,12 +1,10 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { NativeModule, requireNativeModule } from "expo";
 
-import { ExpoIntlFormatterModuleEvents } from './ExpoIntlFormatter.types';
-
-declare class ExpoIntlFormatterModule extends NativeModule<ExpoIntlFormatterModuleEvents> {
-  PI: number;
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
+declare class ExpoIntlFormatterModule extends NativeModule {
+  formatNumber(number: number, locale: string): string;
 }
 
 // This call loads the native module object from the JSI.
-export default requireNativeModule<ExpoIntlFormatterModule>('ExpoIntlFormatter');
+export default requireNativeModule<ExpoIntlFormatterModule>(
+  "ExpoIntlFormatter"
+);

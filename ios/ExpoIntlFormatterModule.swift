@@ -1,48 +1,24 @@
 import ExpoModulesCore
 
 public class ExpoIntlFormatterModule: Module {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
-  public func definition() -> ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('ExpoIntlFormatter')` in JavaScript.
-    Name("ExpoIntlFormatter")
-
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants([
-      "PI": Double.pi
-    ])
-
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
-
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      return "Hello world! 👋"
-    }
-
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { (value: String) in
-      // Send an event to JavaScript.
-      self.sendEvent("onChange", [
-        "value": value
-      ])
-    }
-
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(ExpoIntlFormatterView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: ExpoIntlFormatterView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
+    func formatNumber(_ number: Double, locale: String) -> String {
+        // Check if the ios version is >= 15.0
+        if #available(iOS 15.0, *) {
+            let locale = Locale(identifier: locale)
+            let compactNameFormatted = number.formatted(.number
+                .locale(locale)
+                .notation(.compactName)
+                .precision(.fractionLength(0...1)))
+            return compactNameFormatted
         }
-      }
-
-      Events("onLoad")
+        return String(number)
+        
     }
-  }
+    public func definition() -> ModuleDefinition {
+        Name("ExpoIntlFormatter")
+
+        Function("formatNumber") { (originalNumber: Double, locale: String) -> String in
+            formatNumber(originalNumber, locale: locale)
+        }
+    }
 }
