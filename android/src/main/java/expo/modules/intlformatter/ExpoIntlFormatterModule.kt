@@ -1,12 +1,12 @@
 package expo.modules.intlformatter
 
+import android.icu.text.CompactDecimalFormat
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
-import java.text.NumberFormat
 import java.util.Locale
 
 class ExpoIntlFormatterModule : Module() {
-  fun getTranslatedLanguageName(language: String, locale: String): String {
+  private fun getTranslatedLanguageName(language: String, locale: String): String {
     return try {
       val targetLocale = Locale.forLanguageTag(locale)
       val translatedName = targetLocale.getDisplayLanguage(Locale.forLanguageTag(language))
@@ -16,9 +16,9 @@ class ExpoIntlFormatterModule : Module() {
     }
 }
 
-  fun formatNumber(number: Double, locale: String): String {
-    val locale = Locale.forLanguageTag(locale)
-    val numberFormat = NumberFormat.getCompactNumberInstance(locale, NumberFormat.Style.SHORT)
+  fun formatNumber(number: Double, locale: String, maximumFractionDigits: Int = 1): String {
+    val languageLocale = Locale.forLanguageTag(locale)
+    val numberFormat = CompactDecimalFormat.getInstance(languageLocale, CompactDecimalFormat.CompactStyle.SHORT)
     numberFormat.maximumFractionDigits = maximumFractionDigits
     numberFormat.minimumFractionDigits = 1
     return numberFormat.format(number)
